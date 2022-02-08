@@ -6,6 +6,9 @@ public class Fase1 {
 
     public static void main(String[] args) {
         int op = 0;
+        String rutaJson;
+        boolean jsonCarga = false, ventanillaCarga = false;
+        int ventanillasNum;
         do{
             try {
                 System.out.println("------------------------------------------------------");
@@ -19,12 +22,34 @@ public class Fase1 {
                 Scanner entrada1 = new Scanner(System.in);
                 op = entrada1.nextInt();
                 if(op == 1){
-                   
                     System.out.println("\ta. Carga masiva clientes");
                     System.out.println("\tb. Cantidad de ventanillas\n");
-                    System.out.println("Ingrese la literal de la opción: ");
+                    System.out.println("\tIngrese la literal de la opción: ");
                     Scanner entrada2 = new Scanner(System.in);
-                    char op2 = entrada2.nextLine().charAt(0);  
+                    char op2 = entrada2.nextLine().charAt(0); 
+                    switch (op2) {
+                        case 'a':
+                            System.out.println("\t\tIngrese la ruta del archivo JSON que posee los datos: ");
+                            rutaJson = entrada2.nextLine();
+                            System.out.println("\t\tLa ruta es-> " + rutaJson);
+                            jsonCarga = true;
+                            break;
+                        case 'b':
+                            System.out.println("\t\tIngrese el número de ventanillas: ");
+                            ventanillasNum = entrada1.nextInt();
+                            System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
+                            ventanillaCarga = true;
+                            break;
+                        default:
+                            System.out.println("Opción no valida");
+                            break;
+                    }
+                }else if(op == 2){
+                    if(jsonCarga && ventanillaCarga){
+                        System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
+                    }else{
+                        System.out.println("Verificar si se cargaron datos de los clientes y de las ventanillas");
+                    }
                 }
             }catch(Exception error){
                 System.out.println("---> El valor ingresado es incorrecto <---");
