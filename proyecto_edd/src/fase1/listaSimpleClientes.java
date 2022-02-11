@@ -1,6 +1,5 @@
 package fase1;
 
-
 public class listaSimpleClientes {
     nodoCliente inicio;
     //Creando lista vacía con cabecera

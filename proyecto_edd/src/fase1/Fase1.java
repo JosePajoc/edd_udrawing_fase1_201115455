@@ -20,47 +20,47 @@ public class Fase1 {
 
         do {
             //try {
-                System.out.println("------------------------------------------------------");
-                System.out.println("1. Parámetros iniciales");
-                System.out.println("2. Ejecutar paso");
-                System.out.println("3. Estado en memoria de las estructuras");
-                System.out.println("4. Reportes");
-                System.out.println("5. Acerca de");
-                System.out.println("6. Salir\n");
-                System.out.println("Ingrese el número de opción: ");
-                Scanner entrada1 = new Scanner(System.in);
-                op = entrada1.nextInt();
-                if (op == 1) {
-                    System.out.println("\ta. Carga masiva clientes");
-                    System.out.println("\tb. Cantidad de ventanillas\n");
-                    System.out.println("\tIngrese la literal de la opción: ");
-                    Scanner entrada2 = new Scanner(System.in);
-                    char op2 = entrada2.nextLine().charAt(0);
-                    switch (op2) {
-                        case 'a':
-                            System.out.println("\t\tIngrese la ruta del archivo JSON que posee los datos: ");
-                            String rutaJson = entrada2.nextLine();
-                            leerJson(rutaJson);     //Llamar función de lectura
-                            break;
-                        case 'b':
-                            System.out.println("\t\tIngrese el número de ventanillas: ");
-                            ventanillasNum = entrada1.nextInt();
-                            System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
-                            ventanillaCarga = true;
-                            break;
-                        default:
-                            System.out.println("Opción no valida");
-                            break;
-                    }
-                } else if (op == 2) {
-                    if (jsonCarga && ventanillaCarga) {
-                        System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
-                    } else {
-                        System.out.println("Verificar si se cargaron datos de los clientes y de las ventanillas");
-                    }
+            System.out.println("------------------------------------------------------");
+            System.out.println("1. Parámetros iniciales");
+            System.out.println("2. Ejecutar paso");
+            System.out.println("3. Estado en memoria de las estructuras");
+            System.out.println("4. Reportes");
+            System.out.println("5. Acerca de");
+            System.out.println("6. Salir\n");
+            System.out.println("Ingrese el número de opción: ");
+            Scanner entrada1 = new Scanner(System.in);
+            op = entrada1.nextInt();
+            if (op == 1) {
+                System.out.println("\ta. Carga masiva clientes");
+                System.out.println("\tb. Cantidad de ventanillas\n");
+                System.out.println("\tIngrese la literal de la opción: ");
+                Scanner entrada2 = new Scanner(System.in);
+                char op2 = entrada2.nextLine().charAt(0);
+                switch (op2) {
+                    case 'a':
+                        System.out.println("\t\tIngrese la ruta del archivo JSON que posee los datos: ");
+                        String rutaJson = entrada2.nextLine();
+                        leerJson(rutaJson);     //Llamar función de lectura
+                        break;
+                    case 'b':
+                        System.out.println("\t\tIngrese el número de ventanillas: ");
+                        ventanillasNum = entrada1.nextInt();
+                        System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
+                        ventanillaCarga = true;
+                        break;
+                    default:
+                        System.out.println("Opción no valida");
+                        break;
                 }
+            } else if (op == 2) {
+                if (jsonCarga && ventanillaCarga) {
+                    System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
+                } else {
+                    System.out.println("Verificar si se cargaron datos de los clientes y de las ventanillas");
+                }
+            }
             //} catch (Exception error) {
-                //System.out.println("---> El valor ingresado es incorrecto <---");
+            //System.out.println("---> El valor ingresado es incorrecto <---");
             //}
 
         } while (op != 6);
@@ -77,7 +77,6 @@ public class Fase1 {
             for (int i = 1; i <= entradaJson.size(); i++) {
                 //Iterando para cada cliente del Json
                 Map datos = ((Map) entradaJson.get("Cliente" + i));
-                //System.out.println("--------------------------");
                 //Se crea objeto para acceder a los datos del mapa en iteraciones
                 Iterator<Map.Entry> info = datos.entrySet().iterator();
                 //Variables temporales para usar en el nodo cliente
@@ -90,9 +89,9 @@ public class Fase1 {
                     //Mostrar cada par
                     //System.out.println(par.getKey() + ":" + par.getValue());
                     if (par.getKey().equals("id_cliente")) {
-                        id =  Integer.valueOf(String.valueOf(par.getValue()));
+                        id = Integer.valueOf(String.valueOf(par.getValue()));
                     } else if (par.getKey().equals("nombre_cliente")) {
-                        nombre = String.valueOf(par.getValue()); 
+                        nombre = String.valueOf(par.getValue());
                     } else if (par.getKey().equals("img_color")) {
                         img_color = Integer.valueOf(String.valueOf(par.getValue()));
                     } else if (par.getKey().equals("img_bw")) {
@@ -110,5 +109,4 @@ public class Fase1 {
 
         }
     }
-
 }
