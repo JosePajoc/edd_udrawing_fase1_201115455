@@ -11,12 +11,15 @@ import org.json.simple.parser.ParseException;
 
 public class Fase1 {
 
+    //CR -> Cola de recepción
     static int op = 0;
     static boolean jsonCarga = false, ventanillaCarga = false;
     static int ventanillasNum;
-    static listaSimpleClientes listaClientes = new listaSimpleClientes();
+    static int cantidadJsonCargados;
+    static listaSimpleClientesCR listaClientes = new listaSimpleClientesCR();
     static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal"};
     static String[] apellidos = {"Santos", "Pineda", "Asunción", "Pelico", "Estrada", "Hernandez", "Us", "Po", "Sax", "Sosa"};
+    static listaSimpleVentanillas listaVentanillas = new listaSimpleVentanillas();
 
     public static void main(String[] args) {
 
@@ -47,14 +50,19 @@ public class Fase1 {
                         } else {
                             System.out.println("Ya se han cargado los clientes");
                         }
-
                         break;
                     case 'b':
                         if (ventanillaCarga == false) {
                             System.out.println("\t\tIngrese el número de ventanillas: ");
                             ventanillasNum = entrada1.nextInt();
                             System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
-                            ventanillaCarga = true;
+                            if (ventanillasNum > 1) {
+                                for (int i = 0; i < ventanillasNum; i++) {
+                                    listaVentanillas.insertarNodoVentanilla(i);
+                                }
+                                ventanillaCarga = true;
+                                //listaVentanillas.verNodosVentanillas();
+                            }
                         } else {
                             System.out.println("Ya se ha cargado el número de ventanillas");
                         }
@@ -65,10 +73,25 @@ public class Fase1 {
                 }
             } else if (op == 2) {
                 if (jsonCarga && ventanillaCarga) {
+                    //área de clientes que se crean para entrar a la cola de recepción
+                    int valor = (int) (Math.random() * 3); //aleatorio entre 0 y 3
+                    for (int i = 0; i < valor; i++) {
+                        cantidadJsonCargados++;     //se usa para continuar numeración del Json para los nuevos clientes
+                        generarClientes(cantidadJsonCargados);
+                    }
+                    System.out.println("Cantidad clientes creados -> " + valor);
+                    listaClientes.verNodosClientes();
+
+                    System.out.println("Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
+                    
+                    //área para que cada cliente pase a una ventanilla disponible
+                    
                     System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
                 } else {
                     System.out.println("Verificar si se cargaron datos de los clientes y de las ventanillas");
                 }
+            } else if (op == 3) {
+
             }
             //} catch (Exception error) {
             //System.out.println("---> El valor ingresado es incorrecto <---");
@@ -110,10 +133,10 @@ public class Fase1 {
                 }
                 listaClientes.insertarNodoCliente(id, nombre, img_color, img_bw);
             }
-            System.out.println("Total de clientes cargados en el JSON -> " + entradaJson.size());
-            generarClientes(entradaJson.size());
-            listaClientes.verNodosClientes();
-            System.out.println("Total de clientes registrados -> " + listaClientes.verCantidadClientes());
+            System.out.println("Total de clientes en cola de recepción -> " + entradaJson.size());
+            cantidadJsonCargados = entradaJson.size(); //Asignación para uso posterior
+            //listaClientes.verNodosClientes();
+            //System.out.println("##################################");
             jsonCarga = true;
         } catch (IOException e) {
 
@@ -124,16 +147,14 @@ public class Fase1 {
 
     public static void generarClientes(int numeracion) {
         int fin = nombres.length - 1;
-        for (int i = 0; i < nombres.length; i++) {
-            numeracion = numeracion + 1;
-            int valor = (int) (Math.random() * fin);  //Valor aleatorio entre 0 y el tamaño de la lista de nombres
-            String temp_cliente = nombres[valor] + " " + apellidos[valor] + "-" + String.valueOf(numeracion);
-            int valor_img = (int) (Math.random() * 4);
-            if (valor_img == 4) {
-                listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, 0);
-            } else {
-                listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, (4 - valor_img));
-            }
+        int valor = (int) (Math.random() * fin);  //Valor aleatorio entre 0 y el tamaño de la lista de nombres
+        String temp_cliente = nombres[valor] + " " + apellidos[valor] + "-" + String.valueOf(numeracion);
+        int valor_img = (int) (Math.random() * 4); //Valor aleatorio entre 0 y 4
+
+        if (valor_img == 4) {
+            listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, 0);
+        } else {
+            listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, (4 - valor_img));
         }
     }
 }
