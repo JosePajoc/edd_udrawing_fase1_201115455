@@ -57,6 +57,7 @@ public class Fase1 {
                             ventanillasNum = entrada1.nextInt();
                             System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
                             if (ventanillasNum > 1) {
+                                //Creación de ventanillas
                                 for (int i = 0; i < ventanillasNum; i++) {
                                     listaVentanillas.insertarNodoVentanilla(i);
                                 }
@@ -85,6 +86,13 @@ public class Fase1 {
                     System.out.println("Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
                     
                     //área para que cada cliente pase a una ventanilla disponible
+                    for(int i = 0; i < ventanillasNum; i++){
+                        listaVentanillas.atenderCliente(listaClientes.sacarClienteCR());
+                        
+                    }
+                    System.out.println("\n#####################\n");
+                    listaClientes.verNodosClientes();
+                    listaVentanillas.ver();
                     
                     System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
                 } else {
@@ -119,8 +127,7 @@ public class Fase1 {
                 while (info.hasNext()) {
                     //A cada valor lo asignamos a una variable que poseerá Clave y valor
                     Map.Entry par = info.next();
-                    //Mostrar cada par
-                    //System.out.println(par.getKey() + ":" + par.getValue());
+                    //Mostrar cada par  //System.out.println(par.getKey() + ":" + par.getValue());
                     if (par.getKey().equals("id_cliente")) {
                         id = Integer.valueOf(String.valueOf(par.getValue()));
                     } else if (par.getKey().equals("nombre_cliente")) {
@@ -135,8 +142,6 @@ public class Fase1 {
             }
             System.out.println("Total de clientes en cola de recepción -> " + entradaJson.size());
             cantidadJsonCargados = entradaJson.size(); //Asignación para uso posterior
-            //listaClientes.verNodosClientes();
-            //System.out.println("##################################");
             jsonCarga = true;
         } catch (IOException e) {
 

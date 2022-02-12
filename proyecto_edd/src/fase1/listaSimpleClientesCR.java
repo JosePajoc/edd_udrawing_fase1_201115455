@@ -43,4 +43,10 @@ public class listaSimpleClientesCR {
         } while (nodoAuxiliar != null);
         return contador;
     }
+    
+    public nodoCliente sacarClienteCR(){
+        nodoCliente nodoAuxiliar = this.inicio;
+        this.inicio = this.inicio.siguiente;
+        return nodoAuxiliar;
+    }
 }

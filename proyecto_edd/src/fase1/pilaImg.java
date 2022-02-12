@@ -3,7 +3,7 @@ package fase1;
 public class pilaImg {
     nodoCliente inicio;
 
-    //Creando lista vacía con cabecera
+    //Creando pila vacía con cabecera
     public pilaImg() {
         this.inicio = null;
     }
