@@ -15,6 +15,8 @@ public class Fase1 {
     static boolean jsonCarga = false, ventanillaCarga = false;
     static int ventanillasNum;
     static listaSimpleClientes listaClientes = new listaSimpleClientes();
+    static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal"};
+    static String[] apellidos = {"Santos", "Pineda", "Asunción", "Pelico", "Estrada", "Hernandez", "Us", "Po", "Sax", "Sosa"};
 
     public static void main(String[] args) {
 
@@ -38,15 +40,24 @@ public class Fase1 {
                 char op2 = entrada2.nextLine().charAt(0);
                 switch (op2) {
                     case 'a':
-                        System.out.println("\t\tIngrese la ruta del archivo JSON que posee los datos: ");
-                        String rutaJson = entrada2.nextLine();
-                        leerJson(rutaJson);     //Llamar función de lectura
+                        if (jsonCarga == false) {
+                            System.out.println("\t\tIngrese la ruta del archivo JSON que posee los datos: ");
+                            String rutaJson = entrada2.nextLine();
+                            leerJson(rutaJson);     //Llamar función de lectura
+                        } else {
+                            System.out.println("Ya se han cargado los clientes");
+                        }
+
                         break;
                     case 'b':
-                        System.out.println("\t\tIngrese el número de ventanillas: ");
-                        ventanillasNum = entrada1.nextInt();
-                        System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
-                        ventanillaCarga = true;
+                        if (ventanillaCarga == false) {
+                            System.out.println("\t\tIngrese el número de ventanillas: ");
+                            ventanillasNum = entrada1.nextInt();
+                            System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
+                            ventanillaCarga = true;
+                        } else {
+                            System.out.println("Ya se ha cargado el número de ventanillas");
+                        }
                         break;
                     default:
                         System.out.println("Opción no valida");
@@ -62,7 +73,6 @@ public class Fase1 {
             //} catch (Exception error) {
             //System.out.println("---> El valor ingresado es incorrecto <---");
             //}
-
         } while (op != 6);
     }
 
@@ -100,13 +110,30 @@ public class Fase1 {
                 }
                 listaClientes.insertarNodoCliente(id, nombre, img_color, img_bw);
             }
-            System.out.println("Total de clientes cargados -> " + entradaJson.size());
+            System.out.println("Total de clientes cargados en el JSON -> " + entradaJson.size());
+            generarClientes(entradaJson.size());
             listaClientes.verNodosClientes();
+            System.out.println("Total de clientes registrados -> " + listaClientes.verCantidadClientes());
             jsonCarga = true;
         } catch (IOException e) {
 
         } catch (ParseException e) {
 
+        }
+    }
+
+    public static void generarClientes(int numeracion) {
+        int fin = nombres.length - 1;
+        for (int i = 0; i < nombres.length; i++) {
+            numeracion = numeracion + 1;
+            int valor = (int) (Math.random() * fin);  //Valor aleatorio entre 0 y el tamaño de la lista de nombres
+            String temp_cliente = nombres[valor] + " " + apellidos[valor] + "-" + String.valueOf(numeracion);
+            int valor_img = (int) (Math.random() * 4);
+            if (valor_img == 4) {
+                listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, 0);
+            } else {
+                listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, (4 - valor_img));
+            }
         }
     }
 }
