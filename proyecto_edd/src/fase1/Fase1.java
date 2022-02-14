@@ -48,14 +48,14 @@ public class Fase1 {
                             String rutaJson = entrada2.nextLine();
                             leerJson(rutaJson);     //Llamar función de lectura
                         } else {
-                            System.out.println("Ya se han cargado los clientes");
+                            System.out.println("#################### Ya se han cargado los clientes ####################\n");
                         }
                         break;
                     case 'b':
                         if (ventanillaCarga == false) {
                             System.out.println("\t\tIngrese el número de ventanillas: ");
                             ventanillasNum = entrada1.nextInt();
-                            System.out.println("\t\tEl número de ventanillas registradas es-> " + ventanillasNum);
+                            System.out.println("\t\tEl número de ventanillas registradas es -> " + ventanillasNum);
                             if (ventanillasNum > 1) {
                                 //Creación de ventanillas
                                 for (int i = 0; i < ventanillasNum; i++) {
@@ -65,38 +65,37 @@ public class Fase1 {
                                 //listaVentanillas.verNodosVentanillas();
                             }
                         } else {
-                            System.out.println("Ya se ha cargado el número de ventanillas");
+                            System.out.println("#################### Ya se ha cargado el número de ventanillas ####################\n");
                         }
                         break;
                     default:
-                        System.out.println("Opción no valida");
+                        System.out.println("#################### Opción no valida ####################");
                         break;
                 }
             } else if (op == 2) {
                 if (jsonCarga && ventanillaCarga) {
-                    //área de clientes que se crean para entrar a la cola de recepción
+                    //-------------------> área de clientes que se crean para entrar a la cola de recepción
                     int valor = (int) (Math.random() * 3); //aleatorio entre 0 y 3
                     for (int i = 0; i < valor; i++) {
                         cantidadJsonCargados++;     //se usa para continuar numeración del Json para los nuevos clientes
                         generarClientes(cantidadJsonCargados);
                     }
-                    System.out.println("Cantidad clientes creados -> " + valor);
-                    listaClientes.verNodosClientes();
-
+                    System.out.println("#################### Cantidad clientes creados -> " + valor);
                     System.out.println("Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
-                    
-                    //área para que cada cliente pase a una ventanilla disponible
-                    for(int i = 0; i < ventanillasNum; i++){
+
+                    //--------------------> área para que cada cliente pase a una ventanilla disponible
+                    while (listaVentanillas.verVentanillaDisponible()) {
                         listaVentanillas.atenderCliente(listaClientes.sacarClienteCR());
-                        
+                        System.out.println("Cliente atendido");
                     }
-                    System.out.println("\n#####################\n");
+                    
+                    System.out.println("##################### \nClientes en cola de recepción\n");
                     listaClientes.verNodosClientes();
                     listaVentanillas.ver();
-                    
+
                     System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
                 } else {
-                    System.out.println("Verificar si se cargaron datos de los clientes y de las ventanillas");
+                    System.out.println("##################Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
                 }
             } else if (op == 3) {
 
@@ -140,7 +139,7 @@ public class Fase1 {
                 }
                 listaClientes.insertarNodoCliente(id, nombre, img_color, img_bw);
             }
-            System.out.println("Total de clientes en cola de recepción -> " + entradaJson.size());
+            System.out.println("####################Total de clientes en cola de recepción -> " + entradaJson.size());
             cantidadJsonCargados = entradaJson.size(); //Asignación para uso posterior
             jsonCarga = true;
         } catch (IOException e) {

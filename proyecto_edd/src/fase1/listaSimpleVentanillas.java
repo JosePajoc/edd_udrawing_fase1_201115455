@@ -33,7 +33,19 @@ public class listaSimpleVentanillas {
         } while (nodoAuxiliar != null);
     }
     
-    public void atenderCliente(nodoCliente cliente){
+    public boolean verVentanillaDisponible(){
+        nodoVentanilla nodoAuxiliar = this.inicio;
+        while ((nodoAuxiliar != null) && (nodoAuxiliar.habilitado == false)){
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        if((nodoAuxiliar != null) && (nodoAuxiliar.habilitado == true)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public String atenderCliente(nodoCliente cliente){
         nodoVentanilla nodoAuxiliar = this.inicio;
         while ((nodoAuxiliar != null) && (nodoAuxiliar.habilitado == false)){
             nodoAuxiliar = nodoAuxiliar.siguiente;
@@ -41,25 +53,13 @@ public class listaSimpleVentanillas {
         if((nodoAuxiliar != null) && (nodoAuxiliar.habilitado == true)){
             nodoAuxiliar.cliente = cliente;
             nodoAuxiliar.habilitado = false;
-        }
+            return "Cliente atendido en la ventanilla -> " + nodoAuxiliar.id;
+        }else{
+            return "############################## Ventanillas ocupadas ##############################\n";
+        }   
     }
     
-    public boolean ventanillaDisponible(int tamanio){  //<----------Seguir aquí
-        int ocupadas = 0;
-        nodoVentanilla nodoAuxiliar = this.inicio;
-        do {
-            if(nodoAuxiliar.habilitado){
-               ocupadas++;
-            }
-            nodoAuxiliar = nodoAuxiliar.siguiente;
-        } while (nodoAuxiliar != null);
-        if(tamanio > ocupadas){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
+    
     
     public void ver(){
         nodoVentanilla nodoAuxiliar = this.inicio;
@@ -67,5 +67,6 @@ public class listaSimpleVentanillas {
             System.out.println("Ventanilla -> " + nodoAuxiliar.id + " -> Cliente que atiende -> " + nodoAuxiliar.cliente.nombre);
             nodoAuxiliar = nodoAuxiliar.siguiente;
         } while ((nodoAuxiliar) != null && (nodoAuxiliar.cliente != null));
+        System.out.println("");
     }
 }
