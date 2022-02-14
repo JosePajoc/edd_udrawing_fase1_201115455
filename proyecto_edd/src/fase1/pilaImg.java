@@ -31,11 +31,13 @@ public class pilaImg {
         }
     }
 
-    public void verNodosClientes() {
+    public String verNodoClientesApilado() {
         nodoCliente nodoAuxiliar = this.inicio;
+        String datosPila = "";
         while (nodoAuxiliar != null){
-            System.out.println(nodoAuxiliar.id + ", " + nodoAuxiliar.nombre + ", " + nodoAuxiliar.img_color + ", " + nodoAuxiliar.img_bw);
+            datosPila = datosPila + nodoAuxiliar.id + ", " + nodoAuxiliar.nombre + ", " + nodoAuxiliar.img_color + ", " + nodoAuxiliar.img_bw + "||";
             nodoAuxiliar = nodoAuxiliar.siguiente;
         }
+        return datosPila;
     }
 }

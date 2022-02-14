@@ -92,6 +92,10 @@ public class Fase1 {
                     System.out.println("##################### \nClientes en cola de recepción\n");
                     listaClientes.verNodosClientes();
                     listaVentanillas.ver();
+                    
+                    //--------------------> área de recepción de imágenes en cada ventanillaS
+                    listaVentanillas.recepcionImg();
+                    
 
                     System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
                 } else {

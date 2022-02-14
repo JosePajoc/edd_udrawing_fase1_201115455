@@ -59,6 +59,15 @@ public class listaSimpleVentanillas {
         }   
     }
     
+    public void recepcionImg(){
+        nodoVentanilla nodoAuxiliar = this.inicio;
+        while ((nodoAuxiliar != null)){
+            nodoAuxiliar.pila_img.apilarNodoCliente(nodoAuxiliar.cliente.id, nodoAuxiliar.cliente.nombre, nodoAuxiliar.cliente.img_color, nodoAuxiliar.cliente.img_bw);
+            System.out.println("Pila ventanilla No. " + nodoAuxiliar.id + " -> "+ nodoAuxiliar.pila_img.verNodoClientesApilado());
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        
+    }
     
     
     public void ver(){
