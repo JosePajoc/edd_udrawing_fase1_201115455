@@ -1,7 +1,8 @@
 package fase1;
 
 public class pilaImg {
-    nodoCliente inicio;
+
+    TnodoClienteP inicio;
 
     //Creando pila vacía con cabecera
     public pilaImg() {
@@ -12,30 +13,30 @@ public class pilaImg {
         return this.inicio == null;
     }
 
-    public void apilarNodoCliente(int id, String nombre, int img_color, int img_bw) {
-        nodoCliente nuevoNodoCliente = new nodoCliente(id, nombre, img_color, img_bw);
+    public void apilarNodoCliente(int id, String nombre, String tipoImg) {
+        TnodoClienteP nuevoNodoCliente = new TnodoClienteP(id, nombre, tipoImg);
         if (this.verVacio()) {
             inicio = nuevoNodoCliente;
         } else {
-            nodoCliente nodoAuxiliar = this.inicio;
+            TnodoClienteP nodoAuxiliar = this.inicio;
             this.inicio = nuevoNodoCliente;
             this.inicio.siguiente = nodoAuxiliar;
         }
     }
-    
-    public void desapilarNodoCliente(){
-        if(this.verVacio()){
+
+    public void desapilarNodoCliente() {
+        if (this.verVacio()) {
             System.out.println("No hay datos en la pila");
-        }else{
+        } else {
             this.inicio = this.inicio.siguiente;
         }
     }
 
     public String verNodoClientesApilado() {
-        nodoCliente nodoAuxiliar = this.inicio;
+        TnodoClienteP nodoAuxiliar = this.inicio;
         String datosPila = "";
-        while (nodoAuxiliar != null){
-            datosPila = datosPila + nodoAuxiliar.id + ", " + nodoAuxiliar.nombre + ", " + nodoAuxiliar.img_color + ", " + nodoAuxiliar.img_bw + "||";
+        while (nodoAuxiliar != null) {
+            datosPila = datosPila + nodoAuxiliar.nombre + ", " + nodoAuxiliar.tipoImg + "||";
             nodoAuxiliar = nodoAuxiliar.siguiente;
         }
         return datosPila;

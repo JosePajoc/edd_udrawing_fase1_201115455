@@ -88,16 +88,15 @@ public class Fase1 {
                         listaVentanillas.atenderCliente(listaClientes.sacarClienteCR());
                         System.out.println("Cliente atendido");
                     }
-                    
+
                     System.out.println("##################### \nClientes en cola de recepción\n");
                     listaClientes.verNodosClientes();
                     listaVentanillas.ver();
-                    
-                    //--------------------> área de recepción de imágenes en cada ventanillaS
-                    listaVentanillas.recepcionImg();
-                    
 
-                    System.out.println("-------------------------> EJECUTANDO PASO <-------------------------");
+                    //--------------------> área de recepción de imágenes en cada ventanilla
+                    listaVentanillas.recepcionImg();
+
+                    System.out.println("\n-------------------------> EJECUTANDO PASO <-------------------------\n");
                 } else {
                     System.out.println("##################Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
                 }
