@@ -11,15 +11,16 @@ import org.json.simple.parser.ParseException;
 
 public class Fase1 {
 
-    //CR -> Cola de recepción
     static int op = 0;
     static boolean jsonCarga = false, ventanillaCarga = false;
     static int ventanillasNum;
     static int cantidadJsonCargados;
+    static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal", "Silvestre", "Juan", "Rocky"};
+    static String[] apellidos = {"Santos", "Pineda", "Asunción", "Pelico", "Estrada", "Hernandez", "Us", "Po", "Sax", "Sosa", "Estalon", "VanDame", "Balboa"};
+    //CR -> Cola de recepción
     static listaSimpleClientesCR listaClientes = new listaSimpleClientesCR();
-    static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal"};
-    static String[] apellidos = {"Santos", "Pineda", "Asunción", "Pelico", "Estrada", "Hernandez", "Us", "Po", "Sax", "Sosa"};
     static listaSimpleVentanillas listaVentanillas = new listaSimpleVentanillas();
+    static colaImpBW colaImpresionBW = new colaImpBW();
 
     public static void main(String[] args) {
 
@@ -96,6 +97,18 @@ public class Fase1 {
                     //--------------------> área de recepción de imágenes en cada ventanilla
                     listaVentanillas.recepcionImg();
 
+                    //--------------------> área de envio de imágenes a impresoras
+                    for (int i = 0; i < ventanillasNum; i++) {
+                        if (listaVentanillas.enviarImpresion() != null) {
+                            System.out.println("Ventanilla No. " + listaVentanillas.enviarImpresion().id + " " + listaVentanillas.enviarImpresion().pila_img.verNodoClientesApilado());
+                            listaVentanillas.enviarImpresion().habilitado = true;
+                            listaVentanillas.enviarImpresion().cliente = null;
+                            listaVentanillas.enviarImpresion().pila_img = new pilaImg();
+                            listaVentanillas.enviarImpresion().recepcionFin = false;
+                        }
+                    }
+
+                    //implementar if para guardar img respectivo
                     System.out.println("\n-------------------------> EJECUTANDO PASO <-------------------------\n");
                 } else {
                     System.out.println("##################Verificar si se cargaron datos de los clientes y de las ventanillas ###################");

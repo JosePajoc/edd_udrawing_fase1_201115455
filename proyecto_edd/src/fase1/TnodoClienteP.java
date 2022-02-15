@@ -2,7 +2,7 @@ package fase1;
 
 public class TnodoClienteP {
 
-    //Tarjeta del nodo cliente para la pila
+    //Tarjeta del nodo cliente para la pila e impresoras
     protected int id;
     protected String nombre;
     protected String tipoImg;

@@ -2,6 +2,8 @@ package fase1;
 
 public class listaSimpleClientesCR {
 
+    //CR -> Cola de recepción
+    
     nodoCliente inicio;
 
     //Creando lista vacía con cabecera
@@ -33,8 +35,8 @@ public class listaSimpleClientesCR {
             nodoAuxiliar = nodoAuxiliar.siguiente;
         } while (nodoAuxiliar != null);
     }
-    
-    public int verCantidadClientes(){
+
+    public int verCantidadClientes() {
         nodoCliente nodoAuxiliar = this.inicio;
         int contador = 0;
         do {
@@ -43,8 +45,8 @@ public class listaSimpleClientesCR {
         } while (nodoAuxiliar != null);
         return contador;
     }
-    
-    public nodoCliente sacarClienteCR(){
+
+    public nodoCliente sacarClienteCR() {
         nodoCliente nodoAuxiliar = this.inicio;
         this.inicio = this.inicio.siguiente;
         return nodoAuxiliar;

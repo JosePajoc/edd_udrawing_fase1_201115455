@@ -72,13 +72,26 @@ public class listaSimpleVentanillas {
                     nodoAuxiliarV.pila_img.apilarNodoCliente(nodoAuxiliarV.cliente.id, nodoAuxiliarV.cliente.nombre, "img_color");
                     nodoAuxiliarV.cliente.img_color--;
                 }
-                System.out.println("Pila ventanilla No. " + nodoAuxiliarV.id + " -> " + nodoAuxiliarV.pila_img.verNodoClientesApilado());
+                System.out.println("Pila, ventanilla No. " + nodoAuxiliarV.id + " -> " + nodoAuxiliarV.pila_img.verNodoClientesApilado());
                 if ((nodoAuxiliarV.cliente.img_bw == 0) && (nodoAuxiliarV.cliente.img_color == 0)) {
-                    System.out.println("################### YA ES HORA DE SACAR AL CLIENTE DE LA VENTANILLA No. " + nodoAuxiliarV.id);
+                    System.out.println("################### El cliente termino de entregar sus imagenes en la ventanilla No. " + nodoAuxiliarV.id);
+                    nodoAuxiliarV.recepcionFin = true;
+                    
                 }
             }
-
-            nodoAuxiliarV = nodoAuxiliarV.siguiente;
+            nodoAuxiliarV = nodoAuxiliarV.siguiente;         
+        }
+    }
+    
+    public nodoVentanilla enviarImpresion() {
+        nodoVentanilla nodoAuxiliar = this.inicio;
+        while ((nodoAuxiliar != null) && (nodoAuxiliar.recepcionFin == false)) {
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        if ((nodoAuxiliar != null) && (nodoAuxiliar.recepcionFin == true)) {
+            return nodoAuxiliar;
+        }else{
+            return null;
         }
     }
 

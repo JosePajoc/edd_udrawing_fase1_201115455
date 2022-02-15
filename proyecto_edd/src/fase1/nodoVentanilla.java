@@ -5,6 +5,7 @@ public class nodoVentanilla {
     protected boolean habilitado;
     protected pilaImg pila_img;
     protected nodoCliente cliente;
+    protected boolean recepcionFin;
     nodoVentanilla siguiente;
     
     public nodoVentanilla(int id){
@@ -12,6 +13,7 @@ public class nodoVentanilla {
         this.habilitado = true;
         this.pila_img = new pilaImg();
         this.cliente = null;
+        recepcionFin = false;
         this.siguiente = null;
         
     }
