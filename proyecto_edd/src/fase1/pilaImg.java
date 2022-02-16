@@ -36,9 +36,19 @@ public class pilaImg {
         TnodoClienteP nodoAuxiliar = this.inicio;
         String datosPila = "";
         while (nodoAuxiliar != null) {
-            datosPila = datosPila + nodoAuxiliar.nombre + ", " + nodoAuxiliar.tipoImg + "||";
+            datosPila = datosPila + nodoAuxiliar.nombre + ", " + nodoAuxiliar.tipoImg + "|.|";
             nodoAuxiliar = nodoAuxiliar.siguiente;
         }
         return datosPila;
+    }
+    
+    public int cantidadImagenesApiladas(){
+        TnodoClienteP nodoAuxiliar = this.inicio;
+        int cantidad = 0;
+        while (nodoAuxiliar != null) {
+            cantidad++;
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        return cantidad;
     }
 }

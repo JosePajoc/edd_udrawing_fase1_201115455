@@ -25,4 +25,18 @@ public class colaImpBW {
         }
     }
     
+    public String verColaImpBW(){
+        TnodoClienteP nodoAuxiliar = this.inicio;
+        String datosColaBW = "";
+        if(this.verVacio()){
+            return "La impresora blanco y negro esta vacía";
+        }else{
+            while(nodoAuxiliar != null){
+            datosColaBW = datosColaBW + nodoAuxiliar.nombre + ", " + nodoAuxiliar.tipoImg + "|.|";
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        return datosColaBW;
+        } 
+    }
+    
 }

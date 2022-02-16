@@ -62,6 +62,7 @@ public class listaSimpleVentanillas {
 
     public void recepcionImg() {
         nodoVentanilla nodoAuxiliarV = this.inicio;
+        //Se recorren todas las ventanillas
         while ((nodoAuxiliarV != null)) {
 
             if (nodoAuxiliarV.cliente != null) {

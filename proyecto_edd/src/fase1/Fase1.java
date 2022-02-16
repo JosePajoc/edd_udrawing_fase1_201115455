@@ -21,6 +21,7 @@ public class Fase1 {
     static listaSimpleClientesCR listaClientes = new listaSimpleClientesCR();
     static listaSimpleVentanillas listaVentanillas = new listaSimpleVentanillas();
     static colaImpBW colaImpresionBW = new colaImpBW();
+    static colaImpColor colaImpresionColor = new colaImpColor();
 
     public static void main(String[] args) {
 
@@ -100,15 +101,32 @@ public class Fase1 {
                     //--------------------> área de envio de imágenes a impresoras
                     for (int i = 0; i < ventanillasNum; i++) {
                         if (listaVentanillas.enviarImpresion() != null) {
-                            System.out.println("Ventanilla No. " + listaVentanillas.enviarImpresion().id + " " + listaVentanillas.enviarImpresion().pila_img.verNodoClientesApilado());
+                            //Se extrae la pila para no perderla y así enviarla a la impresora respectiva
+                            pilaImg pilaTemporal = listaVentanillas.enviarImpresion().pila_img;
+
+                            TnodoClienteP aux = pilaTemporal.inicio;
+                            while (aux != null) {
+                                if(aux.tipoImg.equals("img_bw")){
+                                    colaImpresionBW.insertarImagenCola(aux.id, aux.nombre, aux.tipoImg);
+                                }else if(aux.tipoImg.equals("img_color")){
+                                    colaImpresionColor.insertarImagenCola(aux.id, aux.nombre, aux.tipoImg);
+                                }
+                                aux = aux.siguiente;
+                            }
+                            //Restaurando la ventanilla con valores iniciales
                             listaVentanillas.enviarImpresion().habilitado = true;
                             listaVentanillas.enviarImpresion().cliente = null;
                             listaVentanillas.enviarImpresion().pila_img = new pilaImg();
                             listaVentanillas.enviarImpresion().recepcionFin = false;
                         }
                     }
-
-                    //implementar if para guardar img respectivo
+                    
+                    //--------------------> área para ver las colas de impresión
+                    System.out.println("\nCola impresora BW: " + colaImpresionBW.verColaImpBW());
+                    System.out.println("Cola impresora Color: " + colaImpresionColor.verColaImpColor());
+                    
+                    //------> AQUÍ
+                    
                     System.out.println("\n-------------------------> EJECUTANDO PASO <-------------------------\n");
                 } else {
                     System.out.println("##################Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
