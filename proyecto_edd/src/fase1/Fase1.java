@@ -81,7 +81,7 @@ public class Fase1 {
                     System.out.println("\n-----------------------------------> EJECUTANDO PASO <-----------------------------------\n");
 
                     //-------------------> área de clientes que se crean para entrar a la cola de recepción
-                    int valor = (int) (Math.random() * 3); //aleatorio entre 0 y 3
+                    int valor = (int) (Math.random() * 3); //aleatorio para crear clientes entre 0 y 3
                     for (int i = 0; i < valor; i++) {
                         cantidadJsonCargados++;     //se usa para continuar numeración del Json para los nuevos clientes
                         generarClientes(cantidadJsonCargados);
@@ -139,26 +139,32 @@ public class Fase1 {
                     //--------------------> área para ver las colas de impresión
                     System.out.println("\n.............................. Cola impresora BW ..............................");
                     System.out.println(colaImpresionBW.verColaImpBW());
-                    System.out.println("............................. Cola impresora Color ..............................");
+                    System.out.println("\n............................. Cola impresora Color ..............................");
                     System.out.println(colaImpresionColor.verColaImpColor());
 
                     //área impresión de imagenes que se encuentran en sus respectivas colas
-                    if (colaImpresionBW.verTamanioCola() > 1) {     //<----- solo imprime si la cola es mayor a 1
-                        System.out.println("\n>>>> Imprimiendo imagen en Blanco y negro");
-                        System.out.println(colaImpresionBW.sacarImpresionCola().nombre + " >> " + colaImpresionBW.sacarImpresionCola().tipoImg);
-                        // Seguir aquí, tomar la imagen impresa y enviarla a su respectivo cliente
-                        
-                        
+                    if (colaImpresionBW.verTamanioCola() > 0) {
+                        System.out.println("\n>>>>>>>>> Imprimiendo imagen en Blanco y negro");
+                        TnodoClienteP temporal = colaImpresionBW.sacarImpresionCola();
+
+                        System.out.println(temporal.nombre + " >> " + temporal.tipoImg);
+                        //entrega de imagen a cliente por medio de id
+                        salaDeEspera.entregarImpCliente(temporal.id, temporal.tipoImg);
                     }
-                    if (colaImpresionColor.verTamanioCola() > 1) {     //<----- solo imprime si la cola es mayor a 1
+
+                    if (colaImpresionColor.verTamanioCola() > 0) {
                         pasosColor++;
                         if (pasosColor > 1) {
-                            System.out.println("\n>>>> Imprimiendo imagen a Color");
-                            System.out.println(colaImpresionColor.sacarImpresionCola().nombre + " >> " + colaImpresionColor.sacarImpresionCola().tipoImg);
-                            System.out.println("Pasos color " + pasosColor);
+                            System.out.println("\n>>>>>>>>> Imprimiendo imagen a Color");
+                            TnodoClienteP temporal2 = colaImpresionColor.sacarImpresionCola();
+
+                            System.out.println(temporal2.nombre + " >> " + temporal2.tipoImg);
+                            //entrega de imagen a cliente por medio de id
+                            salaDeEspera.entregarImpCliente(temporal2.id, temporal2.tipoImg);
+                            //System.out.println("Pasos color " + pasosColor);
                             pasosColor = 0;
                         }
-                        
+
                     }
 
                     System.out.println("\n-----------------------------------> PASO FINALIZADO <-----------------------------------\n");

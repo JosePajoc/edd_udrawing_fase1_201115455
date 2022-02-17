@@ -14,7 +14,7 @@ public class nodoClienteEspera {
         this.nombre = nombre;
         this.totImg = imgTot;
         this.imgEntregadas = 0;
-        imagenes = new listaImgImpresas();
+        this.imagenes = new listaImgImpresas();
         this.siguiente = null;
         this.anterior = null;
     }

@@ -1,26 +1,26 @@
 package fase1;
 
 public class listaCircularDobleEspera {
-    
+
     nodoClienteEspera inicio;
-    
-    public listaCircularDobleEspera(){
+
+    public listaCircularDobleEspera() {
         this.inicio = null;
     }
-    
-    public boolean verVacio(){
+
+    public boolean verVacio() {
         return this.inicio == null;
     }
-    
-    public void insertarClienteEspera(int id, String nombre, int imgTot){
+
+    public void insertarClienteEspera(int id, String nombre, int imgTot) {
         nodoClienteEspera nuevoNodo = new nodoClienteEspera(id, nombre, imgTot);
-        if(this.verVacio()){
+        if (this.verVacio()) {
             this.inicio = nuevoNodo;
             this.inicio.siguiente = nuevoNodo;
             this.inicio.anterior = nuevoNodo;
-        }else{
+        } else {
             nodoClienteEspera auxiliar = this.inicio;
-            while(auxiliar.siguiente != this.inicio){
+            while (auxiliar.siguiente != this.inicio) {
                 auxiliar = auxiliar.siguiente;
             }
             auxiliar.siguiente = nuevoNodo;
@@ -29,30 +29,31 @@ public class listaCircularDobleEspera {
             nuevoNodo.anterior = auxiliar;
         }
     }
-    
-    public String verListaCircularDobleEspera(){
+
+    public String verListaCircularDobleEspera() {
         String cadena = "";
-        if(!this.verVacio()){
+        if (!this.verVacio()) {
             nodoClienteEspera auxiliar = this.inicio;
-            do{
+            do {
                 cadena = cadena + auxiliar.nombre + "|-|";
                 auxiliar = auxiliar.siguiente;
-            }while(auxiliar != this.inicio);
+            } while (auxiliar != this.inicio);
             return cadena;
-        }else{
+        } else {
             return "No hay clientes aún en sala de espera...";
-        }   
+        }
     }
-    
-    public void entregarImpCliente(int id){
-        if(!this.verVacio()){
+
+    public void entregarImpCliente(int id, String img) {
+        if (!this.verVacio()) {
             nodoClienteEspera aux = this.inicio;
-            do{
-                if(aux.id == id){
-                    
+            do {
+                if (aux.id == id) {
+                    aux.imagenes.insertarImg(img);
+                    System.out.println("La imagen impresa a sido entregada a " + aux.nombre);
                 }
                 aux = aux.siguiente;
-            }while(aux != this.inicio);
+            } while (aux != this.inicio);
         }
     }
 }
