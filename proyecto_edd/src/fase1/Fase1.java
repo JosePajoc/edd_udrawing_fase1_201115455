@@ -78,7 +78,7 @@ public class Fase1 {
             } else if (op == 2) {
                 if (jsonCarga && ventanillaCarga) {
                     System.out.println("\n-----------------------------------> EJECUTANDO PASO <-----------------------------------\n");
-                    
+
                     //-------------------> área de clientes que se crean para entrar a la cola de recepción
                     int valor = (int) (Math.random() * 3); //aleatorio entre 0 y 3
                     for (int i = 0; i < valor; i++) {
@@ -89,6 +89,7 @@ public class Fase1 {
                     System.out.println("#################### Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
 
                     //--------------------> área para que cada cliente pase a una ventanilla disponible
+                    //No pueden haber más ventanillas disponibles que clientes en cola de recepción
                     while (listaVentanillas.verVentanillaDisponible()) {
                         listaVentanillas.atenderCliente(listaClientes.sacarClienteCR());
                         System.out.println("--> Cliente atendido <--");
@@ -110,9 +111,9 @@ public class Fase1 {
 
                             TnodoClienteP aux = pilaTemporal.inicio;
                             while (aux != null) {
-                                if(aux.tipoImg.equals("img_bw")){
+                                if (aux.tipoImg.equals("img_bw")) {
                                     colaImpresionBW.insertarImagenCola(aux.id, aux.nombre, aux.tipoImg);
-                                }else if(aux.tipoImg.equals("img_color")){
+                                } else if (aux.tipoImg.equals("img_color")) {
                                     colaImpresionColor.insertarImagenCola(aux.id, aux.nombre, aux.tipoImg);
                                 }
                                 aux = aux.siguiente;
@@ -121,7 +122,7 @@ public class Fase1 {
                             int idTemp = listaVentanillas.enviarImpresion().cliente.id;
                             String nombreTemp = listaVentanillas.enviarImpresion().cliente.nombre;
                             salaDeEspera.insertarClienteEspera(idTemp, nombreTemp);
-                            
+
                             //Restaurando la ventanilla con valores iniciales
                             listaVentanillas.enviarImpresion().habilitado = true;
                             listaVentanillas.enviarImpresion().cliente = null;
@@ -132,14 +133,20 @@ public class Fase1 {
                     //área para ver la sala de espera
                     System.out.println("\n#################### Clientes en la sala de espera ####################");
                     System.out.println(salaDeEspera.verListaCircularDobleEspera());
-                    
+
                     //--------------------> área para ver las colas de impresión
                     System.out.println("\n.............................. Cola impresora BW ..............................");
                     System.out.println(colaImpresionBW.verColaImpBW());
                     System.out.println("............................. Cola impresora Color ..............................");
                     System.out.println(colaImpresionColor.verColaImpColor());
-                                        
-                    
+
+                    //área impresión de imagenes que se encuentran en sus respectivas colas
+                    System.out.println("\n>>ÁREA DE PRUEBA SACANDO IMPRESIÓN"); 
+                    if (colaImpresionBW.verTamanioCola() > 1) {     //<----- solo funciona si la cola es mayor a 1, contrario error
+                        System.out.println(colaImpresionBW.sacarImpresionCola().nombre + " >> " + colaImpresionBW.sacarImpresionCola().tipoImg);
+                        // Seguir aquí, tomar la imagen impresa y enviarla a su respectivo cliente
+                    }
+
                     System.out.println("\n-----------------------------------> PASO FINALIZADO <-----------------------------------\n");
                 } else {
                     System.out.println("################## Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
