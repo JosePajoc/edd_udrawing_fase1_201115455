@@ -12,8 +12,8 @@ public class listaCircularDobleEspera {
         return this.inicio == null;
     }
     
-    public void insertarClienteEspera(int id, String nombre){
-        nodoClienteEspera nuevoNodo = new nodoClienteEspera(id, nombre);
+    public void insertarClienteEspera(int id, String nombre, int imgTot){
+        nodoClienteEspera nuevoNodo = new nodoClienteEspera(id, nombre, imgTot);
         if(this.verVacio()){
             this.inicio = nuevoNodo;
             this.inicio.siguiente = nuevoNodo;
@@ -41,7 +41,15 @@ public class listaCircularDobleEspera {
             return cadena;
         }else{
             return "No hay clientes aún en sala de espera...";
+        }   
+    }
+    
+    public void entregarImpCliente(){
+        if(!this.verVacio()){
+            nodoClienteEspera aux = this.inicio;
+            do{
+                aux = aux.siguiente;
+            }while(aux != this.inicio);
         }
-        
     }
 }

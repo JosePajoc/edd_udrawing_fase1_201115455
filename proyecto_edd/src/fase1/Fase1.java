@@ -17,6 +17,7 @@ public class Fase1 {
     static int cantidadJsonCargados;
     static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal", "Silvestre", "Juan", "Rocky"};
     static String[] apellidos = {"Santos", "Pineda", "Asunción", "Pelico", "Estrada", "Hernandez", "Us", "Po", "Sax", "Sosa", "Estalon", "VanDame", "Balboa"};
+    static int pasosColor = 0;
     //CR -> Cola de recepción
     static listaSimpleClientesCR listaClientes = new listaSimpleClientesCR();
     static listaSimpleVentanillas listaVentanillas = new listaSimpleVentanillas();
@@ -121,7 +122,8 @@ public class Fase1 {
                             //enviando cliente a sala de espera (lista circular doble enlazada)
                             int idTemp = listaVentanillas.enviarImpresion().cliente.id;
                             String nombreTemp = listaVentanillas.enviarImpresion().cliente.nombre;
-                            salaDeEspera.insertarClienteEspera(idTemp, nombreTemp);
+                            int totImgTemp = listaVentanillas.enviarImpresion().cliente.totImg;
+                            salaDeEspera.insertarClienteEspera(idTemp, nombreTemp, totImgTemp);
 
                             //Restaurando la ventanilla con valores iniciales
                             listaVentanillas.enviarImpresion().habilitado = true;
@@ -141,10 +143,22 @@ public class Fase1 {
                     System.out.println(colaImpresionColor.verColaImpColor());
 
                     //área impresión de imagenes que se encuentran en sus respectivas colas
-                    System.out.println("\n>>ÁREA DE PRUEBA SACANDO IMPRESIÓN"); 
-                    if (colaImpresionBW.verTamanioCola() > 1) {     //<----- solo funciona si la cola es mayor a 1, contrario error
+                    if (colaImpresionBW.verTamanioCola() > 1) {     //<----- solo imprime si la cola es mayor a 1
+                        System.out.println("\n>>>> Imprimiendo imagen en Blanco y negro");
                         System.out.println(colaImpresionBW.sacarImpresionCola().nombre + " >> " + colaImpresionBW.sacarImpresionCola().tipoImg);
                         // Seguir aquí, tomar la imagen impresa y enviarla a su respectivo cliente
+                        
+                        
+                    }
+                    if (colaImpresionColor.verTamanioCola() > 1) {     //<----- solo imprime si la cola es mayor a 1
+                        pasosColor++;
+                        if (pasosColor > 1) {
+                            System.out.println("\n>>>> Imprimiendo imagen a Color");
+                            System.out.println(colaImpresionColor.sacarImpresionCola().nombre + " >> " + colaImpresionColor.sacarImpresionCola().tipoImg);
+                            System.out.println("Pasos color " + pasosColor);
+                            pasosColor = 0;
+                        }
+                        
                     }
 
                     System.out.println("\n-----------------------------------> PASO FINALIZADO <-----------------------------------\n");
