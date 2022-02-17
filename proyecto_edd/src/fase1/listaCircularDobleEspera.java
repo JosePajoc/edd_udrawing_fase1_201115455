@@ -44,10 +44,13 @@ public class listaCircularDobleEspera {
         }   
     }
     
-    public void entregarImpCliente(){
+    public void entregarImpCliente(int id){
         if(!this.verVacio()){
             nodoClienteEspera aux = this.inicio;
             do{
+                if(aux.id == id){
+                    
+                }
                 aux = aux.siguiente;
             }while(aux != this.inicio);
         }
