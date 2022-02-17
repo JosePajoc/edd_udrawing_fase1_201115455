@@ -75,7 +75,7 @@ public class listaSimpleVentanillas {
                 }
                 System.out.println("Pila, ventanilla No. " + nodoAuxiliarV.id + " -> " + nodoAuxiliarV.pila_img.verNodoClientesApilado());
                 if ((nodoAuxiliarV.cliente.img_bw == 0) && (nodoAuxiliarV.cliente.img_color == 0)) {
-                    System.out.println("################### El cliente termino de entregar sus imagenes en la ventanilla No. " + nodoAuxiliarV.id);
+                    System.out.println("--------------- El cliente termino de entregar sus imagenes en la ventanilla No. " + nodoAuxiliarV.id);
                     nodoAuxiliarV.recepcionFin = true;
                     
                 }

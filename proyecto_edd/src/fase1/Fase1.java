@@ -22,12 +22,13 @@ public class Fase1 {
     static listaSimpleVentanillas listaVentanillas = new listaSimpleVentanillas();
     static colaImpBW colaImpresionBW = new colaImpBW();
     static colaImpColor colaImpresionColor = new colaImpColor();
+    static listaCircularDobleEspera salaDeEspera = new listaCircularDobleEspera();
 
     public static void main(String[] args) {
 
         do {
             //try {
-            System.out.println("------------------------------------------------------");
+            System.out.println("-------------------------------------------------- MENÚ PRINCIPAL --------------------------------------------------");
             System.out.println("1. Parámetros iniciales");
             System.out.println("2. Ejecutar paso");
             System.out.println("3. Estado en memoria de las estructuras");
@@ -57,7 +58,7 @@ public class Fase1 {
                         if (ventanillaCarga == false) {
                             System.out.println("\t\tIngrese el número de ventanillas: ");
                             ventanillasNum = entrada1.nextInt();
-                            System.out.println("\t\tEl número de ventanillas registradas es -> " + ventanillasNum);
+                            System.out.println("\t\t#################### El número de ventanillas registradas es -> " + ventanillasNum + "  ####################");
                             if (ventanillasNum > 1) {
                                 //Creación de ventanillas
                                 for (int i = 0; i < ventanillasNum; i++) {
@@ -76,6 +77,8 @@ public class Fase1 {
                 }
             } else if (op == 2) {
                 if (jsonCarga && ventanillaCarga) {
+                    System.out.println("\n-----------------------------------> EJECUTANDO PASO <-----------------------------------\n");
+                    
                     //-------------------> área de clientes que se crean para entrar a la cola de recepción
                     int valor = (int) (Math.random() * 3); //aleatorio entre 0 y 3
                     for (int i = 0; i < valor; i++) {
@@ -83,15 +86,15 @@ public class Fase1 {
                         generarClientes(cantidadJsonCargados);
                     }
                     System.out.println("#################### Cantidad clientes creados -> " + valor);
-                    System.out.println("Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
+                    System.out.println("#################### Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
 
                     //--------------------> área para que cada cliente pase a una ventanilla disponible
                     while (listaVentanillas.verVentanillaDisponible()) {
                         listaVentanillas.atenderCliente(listaClientes.sacarClienteCR());
-                        System.out.println("Cliente atendido");
+                        System.out.println("--> Cliente atendido <--");
                     }
 
-                    System.out.println("##################### \nClientes en cola de recepción\n");
+                    System.out.println("##################### Clientes en cola de recepción #####################");
                     listaClientes.verNodosClientes();
                     listaVentanillas.ver();
 
@@ -100,6 +103,7 @@ public class Fase1 {
 
                     //--------------------> área de envio de imágenes a impresoras
                     for (int i = 0; i < ventanillasNum; i++) {
+                        //usando nodo ventanilla que finalizo recepción
                         if (listaVentanillas.enviarImpresion() != null) {
                             //Se extrae la pila para no perderla y así enviarla a la impresora respectiva
                             pilaImg pilaTemporal = listaVentanillas.enviarImpresion().pila_img;
@@ -113,6 +117,11 @@ public class Fase1 {
                                 }
                                 aux = aux.siguiente;
                             }
+                            //enviando cliente a sala de espera (lista circular doble enlazada)
+                            int idTemp = listaVentanillas.enviarImpresion().cliente.id;
+                            String nombreTemp = listaVentanillas.enviarImpresion().cliente.nombre;
+                            salaDeEspera.insertarClienteEspera(idTemp, nombreTemp);
+                            
                             //Restaurando la ventanilla con valores iniciales
                             listaVentanillas.enviarImpresion().habilitado = true;
                             listaVentanillas.enviarImpresion().cliente = null;
@@ -120,16 +129,20 @@ public class Fase1 {
                             listaVentanillas.enviarImpresion().recepcionFin = false;
                         }
                     }
+                    //área para ver la sala de espera
+                    System.out.println("\n#################### Clientes en la sala de espera ####################");
+                    System.out.println(salaDeEspera.verListaCircularDobleEspera());
                     
                     //--------------------> área para ver las colas de impresión
-                    System.out.println("\nCola impresora BW: " + colaImpresionBW.verColaImpBW());
-                    System.out.println("Cola impresora Color: " + colaImpresionColor.verColaImpColor());
+                    System.out.println("\n.............................. Cola impresora BW ..............................");
+                    System.out.println(colaImpresionBW.verColaImpBW());
+                    System.out.println("............................. Cola impresora Color ..............................");
+                    System.out.println(colaImpresionColor.verColaImpColor());
+                                        
                     
-                    //------> AQUÍ
-                    
-                    System.out.println("\n-------------------------> EJECUTANDO PASO <-------------------------\n");
+                    System.out.println("\n-----------------------------------> PASO FINALIZADO <-----------------------------------\n");
                 } else {
-                    System.out.println("##################Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
+                    System.out.println("################## Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
                 }
             } else if (op == 3) {
 
@@ -173,7 +186,7 @@ public class Fase1 {
                 }
                 listaClientes.insertarNodoCliente(id, nombre, img_color, img_bw);
             }
-            System.out.println("####################Total de clientes en cola de recepción -> " + entradaJson.size());
+            System.out.println("#################### Total de clientes en cola de recepción -> " + entradaJson.size());
             cantidadJsonCargados = entradaJson.size(); //Asignación para uso posterior
             jsonCarga = true;
         } catch (IOException e) {
