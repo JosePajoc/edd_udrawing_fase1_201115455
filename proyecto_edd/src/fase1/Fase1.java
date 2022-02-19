@@ -2,6 +2,7 @@ package fase1;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import org.json.simple.parser.ParseException;
 public class Fase1 {
 
     static int op = 0;
-    static boolean jsonCarga = false, ventanillaCarga = false;
+    static boolean jsonCarga = false, ventanillaCarga = false, pasoEjecutado = false;
     static int ventanillasNum;
     static int cantidadJsonCargados;
     static String[] nombres = {"Luis", "Pedro", "Maria", "Melisa", "Marcos", "Hugo", "Karen", "Karina", "Maribel", "Cristal", "Silvestre", "Juan", "Rocky"};
@@ -87,7 +88,7 @@ public class Fase1 {
                         generarClientes(cantidadJsonCargados);
                     }
                     System.out.println("#################### Cantidad clientes creados -> " + valor);
-                    System.out.println("#################### Total de clientes en cola de recepción -> " + listaClientes.verCantidadClientes());
+                    System.out.println("#################### Total de clientes en cola de recepción antes de abrir ventanillas -> " + listaClientes.verCantidadClientes());
 
                     //--------------------> área para que cada cliente pase a una ventanilla disponible
                     //No pueden haber más ventanillas disponibles que clientes en cola de recepción
@@ -124,7 +125,7 @@ public class Fase1 {
                             String nombreTemp = listaVentanillas.enviarImpresion().cliente.nombre;
                             int totImgTemp = listaVentanillas.enviarImpresion().cliente.totImg;
                             salaDeEspera.insertarClienteEspera(idTemp, nombreTemp, totImgTemp);
-
+                            
                             //Restaurando la ventanilla con valores iniciales
                             listaVentanillas.enviarImpresion().habilitado = true;
                             listaVentanillas.enviarImpresion().cliente = null;
@@ -164,15 +165,33 @@ public class Fase1 {
                             //System.out.println("Pasos color " + pasosColor);
                             pasosColor = 0;
                         }
-
                     }
-
+                    pasoEjecutado = true;
                     System.out.println("\n-----------------------------------> PASO FINALIZADO <-----------------------------------\n");
                 } else {
                     System.out.println("################## Verificar si se cargaron datos de los clientes y de las ventanillas ###################");
                 }
             } else if (op == 3) {
+                //Creación de archivos dot
+                if (listaClientes.verCantidadClientes() > 0) {
+                    //generar dot y png
+                    generarDot("Cola de recepción", listaClientes.datosClientesGrafo());
+                }
+                
+                if (colaImpresionBW.verTamanioCola() > 0) {
+                    generarDot("Cola de impresora BW", colaImpresionBW.datosImpresionesGrafo());
+                }else{
+                    System.out.println("\n################## No hay imagenes en la cola de la impresora BW por lo tanto no se creo imagen de la estructura");
+                }
+                if (colaImpresionColor.verTamanioCola() > 0) {
+                    generarDot("Cola de impresora Color", colaImpresionColor.datosImpresionesGrafo());
+                }else{
+                    System.out.println("\n################## No hay imagenes en la cola de la impresora COLOR por lo tanto no se creo imagen de la estructura");
+                }
 
+            } else if (op == 5) {
+                System.out.println("-----------------------------------------------------\n\tEstudiante: José Ernesto Pajoc Raymundo");
+                System.out.println("-----------------------------------------------------\n\tCarné: 201115455");
             }
             //} catch (Exception error) {
             //System.out.println("---> El valor ingresado es incorrecto <---");
@@ -233,6 +252,33 @@ public class Fase1 {
             listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, 0);
         } else {
             listaClientes.insertarNodoCliente(numeracion, temp_cliente, valor_img, (4 - valor_img));
+        }
+    }
+
+    public static void generarDot(String edd, String contenidoDot) {
+        try {
+            PrintWriter escribir = new PrintWriter("grafos/" + edd + ".dot", "UTF-8");
+            escribir.println("digraph G { \n node[shape=box]; \n");
+            escribir.println(contenidoDot);
+            escribir.println("rankdir=LR; \n }");
+            escribir.close();
+            System.out.println("Creado el archivo DOT para " + edd);
+            generarGrafos(edd);
+        } catch (IOException e) {
+            System.out.println("No se pudo crear el archivo DOT de " + edd);
+        }
+    }
+
+    public static void generarGrafos(String edd) {
+        try {
+            //construcción del comando
+            ProcessBuilder procesoSistema = new ProcessBuilder("dot", "-Tpng", "-o", "grafos/" + edd + ".png", "grafos/" + edd + ".dot");
+            procesoSistema.redirectErrorStream(true);   //retorna error del proceso construido
+            //Ejecutar comando
+            procesoSistema.start();
+            System.out.println("Grafo creado");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

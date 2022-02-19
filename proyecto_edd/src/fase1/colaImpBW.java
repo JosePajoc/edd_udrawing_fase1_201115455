@@ -58,4 +58,22 @@ public class colaImpBW {
             return tam;
         }
     }
+
+    //datos para crear el grafo
+    public String datosImpresionesGrafo() {
+        String cadena = "node0[label=\"Cola impresora BW\"]; \n";
+        String unionNodos = "";
+        int valor = 0;
+        TnodoClienteP nodoAuxiliar = this.inicio;
+        while (nodoAuxiliar != null) {
+            cadena = cadena + "node" + (valor+1) + "[label=\"" + nodoAuxiliar.nombre + ", \n tipo = " 
+                    + nodoAuxiliar.tipoImg + "\"]; \n";
+            
+            unionNodos = unionNodos + "node" + valor + " -> " + "node" + (valor + 1) + "; \n";
+          
+            valor++;
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        }
+        return cadena + unionNodos;
+    }
 }

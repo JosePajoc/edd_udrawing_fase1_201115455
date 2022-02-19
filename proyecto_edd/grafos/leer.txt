@@ -1,0 +1,1 @@
+No eliminar esta carpeta ya que alamacenará archivos creados por el sistema.

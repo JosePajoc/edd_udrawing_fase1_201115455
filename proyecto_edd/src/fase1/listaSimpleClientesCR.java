@@ -51,4 +51,22 @@ public class listaSimpleClientesCR {
         this.inicio = this.inicio.siguiente;
         return nodoAuxiliar;
     }
+    
+    //datos para crear el grafo
+    public String datosClientesGrafo() {
+        String cadena = "node1[label=\"Cola de recepción\"]; \n";
+        String unionNodos = "";
+        int valor = 1;
+        nodoCliente nodoAuxiliar = this.inicio;
+        do {
+            cadena = cadena + "node" + (valor+1) + "[label=\"" + nodoAuxiliar.id + ", \n " + nodoAuxiliar.nombre 
+            + ", \n img_color = " + nodoAuxiliar.img_color + ", \n img_bw = " + nodoAuxiliar.img_bw + "\"]; \n";
+            
+            unionNodos = unionNodos + "node" + valor + " -> " + "node" + (valor+1) + "; \n";
+            
+            valor++;
+            nodoAuxiliar = nodoAuxiliar.siguiente;
+        } while (nodoAuxiliar != null);
+        return cadena + unionNodos;
+    }
 }

@@ -104,4 +104,30 @@ public class listaSimpleVentanillas {
         } while ((nodoAuxiliar) != null && (nodoAuxiliar.cliente != null));
         System.out.println("");
     }
+    
+    //datos para creal el grafo
+//    public String datosVentanillas(){
+//        String cadena = "newrank=true; \n";
+//        String unionNodos = "";
+//        String unionVentanillas = "";
+//        String direccion = "";
+//        
+//        nodoVentanilla nodoAux = this.inicio;
+//        while(nodoAux != null){
+//            cadena = cadena +  "nodoClie" + nodoAux.cliente.id + "[label=\"" + nodoAux.cliente.nombre + ", \n img_color = "
+//                    + nodoAux.cliente.img_color + ", \n img_bw = " + nodoAux.cliente.img_bw + "\"]; \n"
+//                    + "nodeVent" + nodoAux.id + "[label=\"Ventanilla No. " + nodoAux.id + "\"]; \n" ;
+//            
+//            unionNodos = unionNodos + "nodoClie" + nodoAux.cliente.id + " -> " + "nodeVent" + nodoAux.id + "; \n";
+//            if(nodoAux.siguiente != null){
+//                unionVentanillas = unionVentanillas +  "nodeVent" + nodoAux.id + " -> " +  "nodeVent" + (nodoAux.id + 1) + " \n";
+//            
+//            }
+//            
+//            direccion = direccion + "nodeVent" + nodoAux.id + "; ";
+//            
+//            nodoAux = nodoAux.siguiente;
+//        }
+//        return cadena + unionNodos + unionVentanillas + " \n { rank=same; " + direccion + " } \n";
+//    }
 }

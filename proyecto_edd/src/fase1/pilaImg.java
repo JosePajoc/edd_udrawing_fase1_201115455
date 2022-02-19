@@ -51,4 +51,6 @@ public class pilaImg {
         }
         return cantidad;
     }
+    
+    
 }
