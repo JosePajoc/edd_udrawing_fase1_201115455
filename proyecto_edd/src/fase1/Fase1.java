@@ -188,6 +188,11 @@ public class Fase1 {
                 }else{
                     System.out.println("\n################## No hay imagenes en la cola de la impresora COLOR por lo tanto no se creo imagen de la estructura");
                 }
+                if(salaDeEspera.verTamListaCircularDobleEspera() > 0){
+                    generarDot("Sala de espera", salaDeEspera.datosDotEspera());
+                }else{
+                    System.out.println("\n################## No hay clientes en la sala de espera");
+                }
 
             } else if (op == 5) {
                 System.out.println("-----------------------------------------------------\n\tEstudiante: José Ernesto Pajoc Raymundo");
